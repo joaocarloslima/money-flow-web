@@ -1,26 +1,33 @@
+import Link from "next/link";
+
 interface NavBarProps {
     active: "dashboard" | "movimentações" | "categorias"
 }
+
+const links = [
+    { label: "dashboard", href: "/dashboard" },
+    { label: "movimentações", href: "/transactions" },
+    { label: "categorias", href: "/categories" },
+]
 
 export default function NavBar(props: NavBarProps) {
     const { active } = props
     const classActive = "border-b-4 border-primary"
 
     return (
-        <nav className="flex justify-between items-center p-6 bg-slate-900">
+        <nav className="flex justify-between bg-slate-900 px-6 pt-6">
             <h1 className="text-2xl font-bold">Money Flow</h1>
-            <ul className="flex gap-4">
-                <li className={active === "dashboard" ? classActive : ""}>
-                    <a href="/dashboard">dashboard</a>
-                </li>
-                <li className={active === "movimentações" ? classActive : ""}>
-                    <a href="/transactions">movimentações</a>
-                </li>
-                <li className={active === "categorias" ? classActive : ""}>
-                    <a href="/categories">categorias</a>
-                </li>
+            <ul className="flex gap-12">
+                {links.map(link =>
+                    <li key={link.label} className={active === link.label ? classActive : ""}>
+                        <Link href={link.href}>
+                            {link.label}
+                        </Link>
+                    </li>
+                )}
+
             </ul>
-            <img className="size-12 rounded-full" src="http://github.com/joaocarloslima.png" alt="" />
+            <img className="size-12 rounded-full" src="http://github.com/joaocarloslima.png" alt="avatar" />
         </nav>
     )
 }
